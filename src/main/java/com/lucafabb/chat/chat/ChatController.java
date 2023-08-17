@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 /*Questa classe è annotata con @Controller, che indica che è un controller di Spring che gestisce le richieste e produce risposte.*/
 @Controller
 public class ChatController {
-
     /*Questa annotazione mappa il metodo alla destinazione di messaggio "/chat.sendMessage" quando un messaggio è inviato da un client*/
     @MessageMapping("/chat.sendMessage")
     /*Indica che il messaggio inviato dal metodo sarà trasmesso a tutti i client con il topic "/topic/public".*/

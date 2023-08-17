@@ -1,5 +1,8 @@
+/* definisce le funzioni e gli event listeners per gestire l'interfaccia utente e la comunicazione con il server WebSocket. Quando l'utente invia il nome utente attraverso il form, la connessione WebSocket viene stabilita e l'utente può inviare e ricevere messaggi nella chat. Gli avatar sono colorati in base al nome utente. Le funzioni onConnected, onError, sendMessage e onMessageReceived sono chiamate in risposta a eventi di connessione, errore, invio di messaggio e ricezione di messaggio rispettivamente. */
+
 'use strict';
 
+//Selezionare gli elementi dell'interfaccia utente
 var usernamePage = document.querySelector('#username-page');
 var chatPage = document.querySelector('#chat-page');
 var usernameForm = document.querySelector('#usernameForm');
@@ -8,16 +11,18 @@ var messageInput = document.querySelector('#message');
 var messageArea = document.querySelector('#messageArea');
 var connectingElement = document.querySelector('.connecting');
 
-
+//Variabili per gestire la connessione WebSocket
 var stompClient = null;
 var username = null;
 
+// Lista di colori per gli avatar
 var colors = [
                '#2196F3', '#32c787', '#00BCD4', '#ff5652',
                '#ffc107', '#ff85af', '#FF9800', '#39bbb0'
              ];
 
 
+// Funzione per connettersi al server WebSocket
 function connect(event) {
     username = document.querySelector('#name').value.trim();
 
@@ -33,7 +38,7 @@ function connect(event) {
     event.preventDefault();
 }
 
-
+// Funzione chiamata quando la connessione WebSocket è stabilita
 function onConnected() {
     // Subscribe to the Public Topic
     stompClient.subscribe('/topic/public', onMessageReceived);
@@ -47,13 +52,13 @@ function onConnected() {
     connectingElement.classList.add('hidden');
 }
 
-
+// Funzione chiamata se si verifica un errore di connessione
 function onError(error) {
     connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
     connectingElement.style.color = 'red';
 }
 
-
+// Funzione per inviare un messaggio
 function sendMessage(event) {
     var messageContent = messageInput.value.trim();
     if(messageContent && stompClient) {
@@ -69,6 +74,7 @@ function sendMessage(event) {
 }
 
 
+// Funzione chiamata quando viene ricevuto un messaggio dal server
 function onMessageReceived(payload) {
     var message = JSON.parse(payload.body);
 
@@ -106,7 +112,7 @@ function onMessageReceived(payload) {
     messageArea.scrollTop = messageArea.scrollHeight;
 }
 
-
+// Funzione per ottenere un colore casuale per l'avatar
 function getAvatarColor(messageSender) {
     var hash = 0;
     for (var i = 0; i < messageSender.length; i++) {
@@ -116,5 +122,6 @@ function getAvatarColor(messageSender) {
     return colors[index];
 }
 
+// Aggiungere gli event listeners per la pagina di username e per l'invio dei messaggi
 usernameForm.addEventListener('submit', connect, true)
 messageForm.addEventListener('submit', sendMessage, true)
