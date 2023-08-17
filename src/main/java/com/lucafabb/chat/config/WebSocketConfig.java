@@ -21,8 +21,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws").withSockJS();
     }
-
-    Q/*uesto metodo configura il message broker utilizzato per instradare i messaggi tra client e server. In questo caso, setApplicationDestinationPrefixes("/app") imposta il prefisso degli indirizzi destinazione delle richieste client che saranno instradate verso metodi di gestione nel server. enableSimpleBroker("/topic") abilita un message broker semplice che inoltrerà i messaggi ai client tramite i topic che iniziano con "/topic".*/
+    /*questo metodo configura il message broker utilizzato per instradare i messaggi tra client e server. In questo caso, setApplicationDestinationPrefixes("/app") imposta il prefisso degli indirizzi destinazione delle richieste client che saranno instradate verso metodi di gestione nel server. enableSimpleBroker("/topic") abilita un message broker semplice che inoltrerà i messaggi ai client tramite i topic che iniziano con "/topic".*/
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         registry.setApplicationDestinationPrefixes("/app");
